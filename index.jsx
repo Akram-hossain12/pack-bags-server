@@ -37,6 +37,12 @@ async function run() {
       const result = await serviceCollection.find().skip(skip).limit(limit).toArray();
       res.send(result);
     });
+    app.get("/allServices",async(req,res)=>{
+      const query = {}
+      const cursor = serviceCollection.find(query);
+      const services = await cursor.toArray();
+      res.send(services);
+    })
     app.get('/totalServices', async (req, res) => {
       const result = await serviceCollection.estimatedDocumentCount();
       res.send({ totalServices: result })
