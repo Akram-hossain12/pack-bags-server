@@ -26,6 +26,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const serviceCollection = client.db('packsdb').collection('services')
+    const reviewesCollection = client.db('packsdb').collection('reviewes')
 
 
     app.get('/services', async (req, res) => {
@@ -46,6 +47,20 @@ async function run() {
     app.get('/totalServices', async (req, res) => {
       const result = await serviceCollection.estimatedDocumentCount();
       res.send({ totalServices: result })
+    })
+    app.post('/reviewes',async(req,res)=>{
+          
+      const reviewes =req.body;
+      const result = await reviewesCollection.insertOne(reviewes);
+
+      res.send(result)
+    })
+
+    app.get("/reviewes",async(req,res)=>{
+      const query={}
+      const cursor = reviewesCollection.find(query)
+      const reviewes =await cursor.toArray();
+      res.send(reviewes)
     })
 
 
