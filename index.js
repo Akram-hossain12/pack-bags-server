@@ -35,8 +35,8 @@ async function run() {
       const limit = parseInt(req.query.limit) || 3;
       const skip = page * limit;
 
-      const result = await serviceCollection.find().skip(skip).limit(limit).toArray();
-      res.send(result);
+      const services = await serviceCollection.find().skip(skip).limit(limit).toArray();
+      res.send(services);
     });
     app.get("/allServices",async(req,res)=>{
       const query = {}
